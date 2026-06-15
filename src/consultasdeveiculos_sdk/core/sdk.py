@@ -31,7 +31,7 @@ class ConsultadeveiculosSDK:
         client = ConsultadeveiculosSDK(sandbox=True)
     """
 
-    VERSION = "1.0.0"
+    VERSION = "1.0.1"
 
     def __init__(self, auth_token: str | None = None, sandbox: bool = False, **options):
         self.sandbox = sandbox
