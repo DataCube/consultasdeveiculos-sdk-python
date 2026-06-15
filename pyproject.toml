@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "consultasdeveiculos-sdk"
+version = "1.0.0"
+description = "SDK Python dinâmica baseada em coleções Postman"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "DataCube", email = "contato@consultasdeveiculos.com"}
+]
+keywords = ["sdk", "postman", "api", "dynamic", "runtime", "veiculos", "consultas"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+consultasdeveiculos-sdk = "consultasdeveiculos_sdk.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/DataCube/consultasdeveiculos-sdk-python"
+Documentation = "https://www.consultasdeveiculos.com/documentation"
+Repository = "https://github.com/DataCube/consultasdeveiculos-sdk-python"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+consultasdeveiculos_sdk = ["../spec/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
