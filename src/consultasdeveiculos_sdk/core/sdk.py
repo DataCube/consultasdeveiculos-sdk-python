@@ -203,24 +203,33 @@ class ConsultadeveiculosSDK:
             })
         return endpoints
 
+    def _list_endpoints(self) -> list[dict]:
+        """Método interno de inspeção dos endpoints."""
+        return self.list_endpoints()
+
+    def _listEndpoints(self) -> list[dict]:
+        """Alias para _list_endpoints em camelCase."""
+        return self.list_endpoints()
+
+    def ListEndpoints(self) -> list[dict]:
+        """Alias para list_endpoints em PascalCase."""
+        return self.list_endpoints()
+
     def list_slugs(self) -> list[str]:
         """Lista apenas os slugs disponíveis."""
         return list(self._slug_map.keys())
 
-    def search_endpoints(self, pattern: str) -> list[dict]:
-        """Busca endpoints por padrão."""
-        regex = re.compile(pattern, re.IGNORECASE)
-        results = []
-        for slug, endpoint in self._slug_map.items():
-            if regex.search(slug) or regex.search(endpoint.get("name", "")):
-                results.append({
-                    "slug": slug,
-                    "key": endpoint.get("key", ""),
-                    "name": endpoint.get("name", ""),
-                    "method": endpoint.get("method", "GET"),
-                    "url": endpoint.get("url", ""),
-                })
-        return results
+    def _list_slugs(self) -> list[str]:
+        """Método interno de inspeção dos slugs."""
+        return self.list_slugs()
+
+    def _listSlugs(self) -> list[str]:
+        """Alias para _list_slugs em camelCase."""
+        return self.list_slugs()
+
+    def ListSlugs(self) -> list[str]:
+        """Alias para list_slugs em PascalCase."""
+        return self.list_slugs()
 
     def help(self, filter_term: str | None = None):
         """Exibe ajuda no console."""
@@ -251,7 +260,6 @@ class ConsultadeveiculosSDK:
         print('   client.help("veiculos")    Filtra endpoints por termo')
         print("   client.list_endpoints()    Lista todos os endpoints")
         print("   client.get_info()          Informações do SDK")
-        print('   client.search_endpoints("placa")  Busca endpoints')
         print()
 
         if filter_term:
@@ -260,7 +268,11 @@ class ConsultadeveiculosSDK:
             print("─" * 64)
             print()
 
-            filtered = self.search_endpoints(filter_term)
+            term = filter_term.lower()
+            filtered = [
+                ep for ep in self.list_endpoints()
+                if term in ep["slug"].lower() or term in ep["name"].lower()
+            ]
             if not filtered:
                 print(f'   Nenhum endpoint encontrado para "{filter_term}"')
             else:
@@ -313,24 +325,6 @@ class ConsultadeveiculosSDK:
         print()
 
         return data
-
-    def search(self, pattern: str) -> list[dict]:
-        """Busca endpoints e imprime resultados."""
-        results = self.search_endpoints(pattern)
-
-        print()
-        print(f'🔍 Busca: "{pattern}" ({len(results)} resultados)')
-        print()
-
-        for ep in results[:10]:
-            print(f"   📌 client.{ep['slug']}()")
-            print(f"      {ep['name']}")
-            print()
-
-        if len(results) > 10:
-            print(f"   ... +{len(results) - 10} resultados")
-
-        return results
 
 
 # Alias

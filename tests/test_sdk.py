@@ -52,10 +52,29 @@ class TestSDKEndpoints:
         assert sdk.has_endpoint(slugs[0]) is True
         assert sdk.has_endpoint("endpoint_inexistente_xyz") is False
 
-    def test_deve_buscar_endpoints(self):
+    def test_deve_padronizar_listagem_de_endpoints_e_slugs(self):
         sdk = ConsultadeveiculosSDK(sandbox=True)
-        results = sdk.search_endpoints("veiculos")
-        assert len(results) > 0
+        endpoints = sdk.list_endpoints()
+        slugs = sdk.list_slugs()
+
+        assert len(endpoints) == len(slugs)
+        for ep, slug in zip(endpoints, slugs):
+            assert ep["slug"] == slug
+
+        # Testa apelidos internos/privados e padrões de caixa (_listEndpoints, ListEndpoints, etc.)
+        assert sdk._list_endpoints() == endpoints
+        assert sdk._listEndpoints() == endpoints
+        assert sdk.ListEndpoints() == endpoints
+
+        assert sdk._list_slugs() == slugs
+        assert sdk._listSlugs() == slugs
+        assert sdk.ListSlugs() == slugs
+
+    def test_nao_deve_possuir_metodo_search(self):
+        sdk = ConsultadeveiculosSDK(sandbox=True)
+        assert not hasattr(sdk, "search") or "search" not in dir(sdk)
+        with pytest.raises(AttributeError):
+            sdk.search("veiculos")
 
     def test_deve_retornar_info(self):
         sdk = ConsultadeveiculosSDK(sandbox=True)

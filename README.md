@@ -70,9 +70,9 @@ client = ConsultadeveiculosSDK(sandbox=True)
 info = client.get_info()
 print(f"Endpoints: {info['slugsCount']}")
 
-# Buscar por texto
-results = client.search_endpoints("proprietario")
-for ep in results:
+# Listar todos os endpoints
+endpoints = client.list_endpoints()
+for ep in endpoints[:5]:
     print(f"  {ep['slug']} - {ep['name']}")
 
 # Listar todos os slugs

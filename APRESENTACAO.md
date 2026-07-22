@@ -96,7 +96,7 @@ O CORE é onde toda a "inteligência" da SDK acontece. Cada componente tem uma r
 1. **Valida as credenciais** — Verifica se o token foi fornecido (ou se está em modo sandbox)
 2. **Coordena a inicialização** — Chama os outros componentes na ordem correta
 3. **Implementa o __getattr__** — Intercepta chamadas como `client.veiculos_agregados()` e as direciona
-4. **Expõe métodos auxiliares** — `help()`, `search_endpoints()`, `list_endpoints()`, `get_info()`
+4. **Expõe métodos auxiliares** — `help()`, `list_endpoints()`, `get_info()`
 
 ```python
 # Fluxo interno do sdk.py
@@ -183,7 +183,7 @@ Funciona como um "dicionário" que mapeia slugs para endpoints:
 | `register(endpoint)` | Adiciona um endpoint ao catálogo |
 | `get(slug)` | Busca um endpoint pelo slug |
 | `list_all()` | Lista todos os endpoints registrados |
-| `search(termo)` | Filtra endpoints por termo |
+| `list_by_namespace(ns)` | Lista endpoints por namespace |
 
 ---
 
@@ -281,7 +281,6 @@ O modo Sandbox é perfeito para:
 client.help()                         # Exibe ajuda completa
 client.help("veiculos")               # Filtra endpoints de veículos
 client.list_endpoints()               # Lista todos os endpoints
-client.search_endpoints("debitos")    # Busca por termo
 client.get_info()                     # Informações da SDK
 client.list_slugs()                   # Lista apenas os slugs
 client.has_endpoint("veiculos_agregados")  # Verifica se existe

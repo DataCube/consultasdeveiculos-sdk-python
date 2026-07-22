@@ -19,10 +19,10 @@ def main():
     print(f"Endpoints: {info['slugsCount']}")
     print()
 
-    # Buscar endpoints de veículos
-    results = client.search_endpoints("veiculos")
-    print(f"Endpoints com 'veiculos': {len(results)}")
-    for ep in results[:5]:
+    # Listar endpoints disponíveis
+    endpoints = client.list_endpoints()
+    print(f"Total de endpoints: {len(endpoints)}")
+    for ep in endpoints[:5]:
         print(f"  • {ep['slug']} - {ep['name']}")
     print()
 

@@ -58,16 +58,6 @@ class EndpointRegistry:
         """Quantidade de endpoints registrados."""
         return len(self.endpoints)
 
-    def search(self, pattern: str) -> list[dict]:
-        """Busca endpoints por padrão."""
-        regex = re.compile(pattern, re.IGNORECASE)
-        return [
-            ep for ep in self.endpoints.values()
-            if regex.search(ep.get("key", ""))
-            or regex.search(ep.get("name", ""))
-            or regex.search(ep.get("description", "") or "")
-        ]
-
     def _add_to_namespace_tree(self, key: str, endpoint: dict):
         """Adiciona endpoint à árvore de namespaces."""
         parts = key.split(".")
